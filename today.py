@@ -74,7 +74,7 @@ def main() -> int:
 
     session = os.getenv("AOC_SESSION")
     headers = {
-        "User-Agent": "https://github.com/RagePly/aoc-23/blob/master/today.py the.hugo.lom@gmail.com",
+        "User-Agent": "github.com/RagePly/aoc-23 the.hugo.lom@gmail.com",
         "Cookie": f"session={session}"
     }
 
