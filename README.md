@@ -13,3 +13,14 @@ This script does follow the [automation guidelines](https://www.reddit.com/r/adv
 
 ## About `setup.sh`
 Sets up a correct `venv` and installs all required packages. Will skip the setup and just activate if it already exists.
+
+## Times
+Output of running `./aoc.py --all --bench --hide`
+
+```
+imported: 1 solution(s) in 399 μs
+running: all with benchmark
+day1.part1: ~ (791 μs 2527 samples)
+day1.part2: ~ (5370 μs 373 samples)
+total: 6161 μs
+```
