@@ -36,12 +36,13 @@ def run_part(part, source, bench):
         samples += 1
     return str(res), total / samples, samples
 
-def print_part(nr, part, output, t, s):
+def print_part(nr, part, output, t, s, hide):
     time_display = display_time(t) + (f" {s} samples" if s > 1 else "")
-    if "\n" not in output:
-        print(f"day{nr}.part{part}: {output} ({time_display})")
+    output_disp = "~" if hide else output
+    if "\n" not in output_disp:
+        print(f"day{nr}.part{part}: {output_disp} ({time_display})")
     else:
-        print(f"day{nr}.part{part} ({time_display}):\n{output}")
+        print(f"day{nr}.part{part} ({time_display}):\n{output_disp}")
 
     
 if __name__ == "__main__":
@@ -49,11 +50,13 @@ if __name__ == "__main__":
     parser.add_argument("--all", "-a", action="store_true") 
     parser.add_argument("--days", "-d", nargs="+", type=int)
     parser.add_argument("--bench", "-b", action="store_true")
+    parser.add_argument("--hide", action="store_true")
     args = parser.parse_args()
 
     run_all = args.all
     run_days = args.days
     run_bench = args.bench
+    hide_res = args.hide
 
     if run_days and run_all:
         print("can't specify both specific days and all days", file=sys.stderr)    
@@ -114,9 +117,9 @@ if __name__ == "__main__":
             part2 = None
         
         p1r, p1t, p1s = run_part(part1, source, run_bench)
-        print_part(nr, 1, p1r, p1t, p1s)
+        print_part(nr, 1, p1r, p1t, p1s, hide_res)
         p2r, p2t, p2s = run_part(part2, source, run_bench)
-        print_part(nr, 2, p2r, p2t, p2s)
+        print_part(nr, 2, p2r, p2t, p2s, hide_res)
 
         total += p1t + p2t 
     print(f"total: {display_time(total)}")
