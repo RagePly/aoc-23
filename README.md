@@ -18,9 +18,11 @@ Sets up a correct `venv` and installs all required packages. Will skip the setup
 Output of running `./aoc.py --all --bench --hide`
 
 ```
-imported: 1 solution(s) in 399 μs
+imported: 2 solution(s) in 556 μs
 running: all with benchmark
-day1.part1: ~ (791 μs 2527 samples)
-day1.part2: ~ (5370 μs 373 samples)
-total: 6161 μs
+day1.part1: ~ (790 μs 2532 samples)
+day1.part2: ~ (4906 μs 408 samples)
+day2.part1: ~ (409 μs 4889 samples)
+day2.part2: ~ (686 μs 2915 samples)
+total: 6790 μs
 ```
