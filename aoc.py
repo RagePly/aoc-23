@@ -36,13 +36,14 @@ def run_part(part, source, bench):
         samples += 1
     return str(res), total / samples, samples
 
-def print_part(nr, part, output, t, s, hide):
+def print_part(nr, part, output, t, s, hide, /, test_nr = None):
     time_display = display_time(t) + (f" {s} samples" if s > 1 else "")
     output_disp = "~" if hide else output
+    part_disp = f"day{nr}.part{part}" + (f".{test_nr}" if test_nr is not None else "")
     if "\n" not in output_disp:
-        print(f"day{nr}.part{part}: {output_disp} ({time_display})")
+        print(f"{part_disp}: {output_disp} ({time_display})")
     else:
-        print(f"day{nr}.part{part} ({time_display}):\n{output_disp}")
+        print(f"{part_disp} ({time_display}):\n{output_disp}")
 
     
 if __name__ == "__main__":
@@ -51,12 +52,14 @@ if __name__ == "__main__":
     parser.add_argument("--days", "-d", nargs="+", type=int)
     parser.add_argument("--bench", "-b", action="store_true")
     parser.add_argument("--hide", action="store_true")
+    parser.add_argument("--no-test", action="store_true")
     args = parser.parse_args()
 
     run_all = args.all
     run_days = args.days
     run_bench = args.bench
     hide_res = args.hide
+    run_test = not args.no_test
 
     if run_days and run_all:
         print("can't specify both specific days and all days", file=sys.stderr)    
@@ -99,12 +102,19 @@ if __name__ == "__main__":
         if not run_all and nr not in run_days:
             continue
 
-        source_path = pathlib.Path("input") / f"day{nr}.txt"
+        input_folder = pathlib.Path("input")
+        source_path = input_folder / f"day{nr}.txt"
         if source_path.exists():
             with open(source_path) as fp:
                 source = fp.read()
         else:
             source = None
+
+        tests = []
+        if run_test:
+            for fn in input_folder.glob(f"day{nr}.*.txt"):
+                with open(fn) as fp:
+                    tests.append((fp.read(), int(fn.suffixes[0][1:])))
 
         if "part1" in dir(day):
             part1 = day.part1
@@ -116,8 +126,19 @@ if __name__ == "__main__":
         else:
             part2 = None
         
+        for test_source, test_nr in tests:
+            p1r_t, p1t_t, p1s_t = run_part(part1, test_source, run_bench)
+            print_part(nr, 1, p1r_t, p1t_t, p1s_t, hide_res, test_nr=test_nr)
+            total += p1t_t
+
         p1r, p1t, p1s = run_part(part1, source, run_bench)
         print_part(nr, 1, p1r, p1t, p1s, hide_res)
+
+        for test_source, test_nr in tests:
+            p2r_t, p2t_t, p2s_t = run_part(part2, test_source, run_bench)
+            print_part(nr, 2, p2r_t, p2t_t, p2s_t, hide_res, test_nr=test_nr)
+            total += p2t_t
+
         p2r, p2t, p2s = run_part(part2, source, run_bench)
         print_part(nr, 2, p2r, p2t, p2s, hide_res)
 
