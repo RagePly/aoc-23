@@ -15,14 +15,16 @@ This script does follow the [automation guidelines](https://www.reddit.com/r/adv
 Sets up a correct `venv` and installs all required packages. Will skip the setup and just activate if it already exists.
 
 ## Times
-Output of running `./aoc.py --all --bench --hide`
+Output of running `./aoc.py --all --bench --hide --no-test`
 
 ```
-imported: 2 solution(s) in 556 μs
+imported: 3 solution(s) in 681 μs
 running: all with benchmark
-day1.part1: ~ (790 μs 2532 samples)
-day1.part2: ~ (4906 μs 408 samples)
-day2.part1: ~ (409 μs 4889 samples)
-day2.part2: ~ (686 μs 2915 samples)
-total: 6790 μs
+day1.part1: ~ (763 μs 2621 samples)
+day1.part2: ~ (4990 μs 401 samples)
+day2.part1: ~ (407 μs 4911 samples)
+day2.part2: ~ (684 μs 2921 samples)
+day3.part1: ~ (3642 μs 550 samples)
+day3.part2: ~ (3123 μs 641 samples)
+total: 14 ms
 ```
