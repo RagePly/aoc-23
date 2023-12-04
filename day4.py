@@ -10,7 +10,6 @@ def part1(src):
 
 from collections import defaultdict 
 def part2(src):
-    s = 0 
     copies = defaultdict(int)
     for i, line in enumerate(src.splitlines()):
         _, cards = line.split(": ")
