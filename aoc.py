@@ -53,6 +53,7 @@ if __name__ == "__main__":
     parser.add_argument("--bench", "-b", action="store_true")
     parser.add_argument("--hide", action="store_true")
     parser.add_argument("--no-test", action="store_true")
+    parser.add_argument("--only-test", action="store_true")
     args = parser.parse_args()
 
     run_all = args.all
@@ -60,6 +61,11 @@ if __name__ == "__main__":
     run_bench = args.bench
     hide_res = args.hide
     run_test = not args.no_test
+    only_test = args.only_test
+
+    if (not run_test) and only_test:
+        print("can't ignore tests and also only run them", file=sys.stderr)
+        sys.exit(1)
 
     if run_days and run_all:
         print("can't specify both specific days and all days", file=sys.stderr)    
@@ -116,6 +122,7 @@ if __name__ == "__main__":
                 with open(fn) as fp:
                     tests.append((fp.read(), int(fn.suffixes[0][1:])))
 
+
         if "part1" in dir(day):
             part1 = day.part1
         else:
@@ -131,16 +138,19 @@ if __name__ == "__main__":
             print_part(nr, 1, p1r_t, p1t_t, p1s_t, hide_res, test_nr=test_nr)
             total += p1t_t
 
-        p1r, p1t, p1s = run_part(part1, source, run_bench)
-        print_part(nr, 1, p1r, p1t, p1s, hide_res)
+        if not only_test:
+            p1r, p1t, p1s = run_part(part1, source, run_bench)
+            print_part(nr, 1, p1r, p1t, p1s, hide_res)
 
         for test_source, test_nr in tests:
             p2r_t, p2t_t, p2s_t = run_part(part2, test_source, run_bench)
             print_part(nr, 2, p2r_t, p2t_t, p2s_t, hide_res, test_nr=test_nr)
             total += p2t_t
 
-        p2r, p2t, p2s = run_part(part2, source, run_bench)
-        print_part(nr, 2, p2r, p2t, p2s, hide_res)
+        if not only_test:
+            p2r, p2t, p2s = run_part(part2, source, run_bench)
+            print_part(nr, 2, p2r, p2t, p2s, hide_res)
 
-        total += p1t + p2t 
+        if not only_test:
+            total += p1t + p2t 
     print(f"total: {display_time(total)}")
