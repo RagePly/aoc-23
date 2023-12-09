@@ -18,23 +18,25 @@ Sets up a correct `venv` and installs all required packages. Will skip the setup
 Output of running `./aoc.py --all --bench --hide --no-test`
 
 ```
-imported: 8 solution(s) in 4652 μs
+imported: 9 solution(s) in 4219 μs
 running: all with benchmark
-day1.part1: ~ (795 μs 2516 samples)
-day1.part2: ~ (4920 μs 407 samples)
-day2.part1: ~ (423 μs 4722 samples)
-day2.part2: ~ (703 μs 2843 samples)
-day3.part1: ~ (3656 μs 547 samples)
-day3.part2: ~ (3241 μs 618 samples)
-day4.part1: ~ (1457 μs 1373 samples)
-day4.part2: ~ (1646 μs 1215 samples)
-day5.part1: ~ (287 μs 6969 samples)
-day5.part2: ~ (4258 μs 470 samples)
-day6.part1: ~ (21 μs 93652 samples)
-day6.part2: ~ (2551 ns 725373 samples)
+day1.part1: ~ (799 μs 2504 samples)
+day1.part2: ~ (5000 μs 400 samples)
+day2.part1: ~ (413 μs 4840 samples)
+day2.part2: ~ (672 μs 2977 samples)
+day3.part1: ~ (3648 μs 549 samples)
+day3.part2: ~ (3143 μs 637 samples)
+day4.part1: ~ (1484 μs 1347 samples)
+day4.part2: ~ (1755 μs 1139 samples)
+day5.part1: ~ (292 μs 6833 samples)
+day5.part2: ~ (4202 μs 476 samples)
+day6.part1: ~ (21 μs 93598 samples)
+day6.part2: ~ (2436 ns 755722 samples)
 day7.part1: ~ (14 ms 145 samples)
-day7.part2: ~ (14 ms 145 samples)
-day8.part1: ~ (3126 μs 640 samples)
+day7.part2: ~ (14 ms 144 samples)
+day8.part1: ~ (3130 μs 639 samples)
 day8.part2: ~ (24 ms 85 samples)
-total: 76 ms
+day9.part1: ~ (8363 μs 240 samples)
+day9.part2: ~ (8400 μs 239 samples)
+total: 93 ms
 ```
