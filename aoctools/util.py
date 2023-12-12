@@ -25,3 +25,12 @@ def partition_map(f, pattern, text):
             yield x
         else:
             yield f(x)
+
+def unzip(it,w=2):
+    parts = tuple([] for _ in range(w))
+    for tup in it:
+        for i in range(len(parts)):
+            parts[i].append(tup[i])
+    return parts
+
+
