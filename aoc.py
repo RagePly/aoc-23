@@ -28,7 +28,7 @@ def run_part(part, source, bench):
     total = 0
     start = time.time()
     samples = 0
-    while (samples==0 or bench) and time.time() - start < 2.0:
+    while (samples==0 or bench) and time.time() - start < 10.0:
         t1 = time.time()
         res = part(source)
         t2 = time.time()
