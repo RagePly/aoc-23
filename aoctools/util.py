@@ -1,5 +1,6 @@
 import re
 import functools
+import contextlib
 
 def default(value, _default):
     return value if value is not None else _default
@@ -33,4 +34,21 @@ def unzip(it,w=2):
             parts[i].append(tup[i])
     return parts
 
+class _AbandonException(Exception):
+    def __init__(self, i):
+        super().__init__("Tried to abandon execution without a context")
+        self._i = i
+class _AbandonHandle:
+    def abandon(self):
+        raise _AbandonException(id(self))
 
+@contextlib.contextmanager
+def abandon():
+    handle = _AbandonHandle()
+    try:
+        yield handle
+    except _AbandonException as ae:
+        if ae._i == id(handle):
+            pass
+        else:
+            raise ae
