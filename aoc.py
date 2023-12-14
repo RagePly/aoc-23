@@ -54,6 +54,8 @@ if __name__ == "__main__":
     parser.add_argument("--hide", action="store_true")
     parser.add_argument("--no-test", action="store_true")
     parser.add_argument("--only-test", action="store_true")
+    parser.add_argument("--improved", action="store_true")
+    parser.add_argument("--original", action="store_true")
     args = parser.parse_args()
 
     run_all = args.all
@@ -62,6 +64,12 @@ if __name__ == "__main__":
     hide_res = args.hide
     run_test = not args.no_test
     only_test = args.only_test
+    use_improved = args.improved
+    use_original = args.original
+    
+    if use_improved and use_original:
+        print("can't use only improved while also only using the original", file=sys.stderr)
+        sys.exit(1)
 
     if (not run_test) and only_test:
         print("can't ignore tests and also only run them", file=sys.stderr)
@@ -122,35 +130,33 @@ if __name__ == "__main__":
                 with open(fn) as fp:
                     tests.append((fp.read(), int(fn.suffixes[0][1:])))
 
+        def_parts = filter(lambda s: s.startswith("part"), dir(day))
+        parts = {}
+        for p in def_parts:
+            parts[p[4:]] = getattr(day,p)
 
-        if "part1" in dir(day):
-            part1 = day.part1
-        else:
-            part1 = None
+        parts["1"] = parts.get("1")
+        parts["2"] = parts.get("2")
 
-        if "part2" in dir(day):
-            part2 = day.part2
-        else:
-            part2 = None
-        
-        for test_source, test_nr in tests:
-            p1r_t, p1t_t, p1s_t = run_part(part1, test_source, run_bench)
-            print_part(nr, 1, p1r_t, p1t_t, p1s_t, hide_res, test_nr=test_nr)
-            total += p1t_t
+        has_improved = set()
+        for p in parts:
+            if p[0] in ("1","2") and len(p) > 1:
+                has_improved.add(p[0])
+        parts = sorted(parts.items()) 
+        for part,f in parts:
+            if use_improved and part in has_improved:
+                continue
+            if use_original and part not in ("1","2"):
+                continue
 
-        if not only_test:
-            p1r, p1t, p1s = run_part(part1, source, run_bench)
-            print_part(nr, 1, p1r, p1t, p1s, hide_res)
+            for test_source, test_nr in tests:
+                r, t, s = run_part(f, test_source, run_bench)
+                print_part(nr, part, r, t, s, hide_res, test_nr=test_nr)
+                total += t
 
-        for test_source, test_nr in tests:
-            p2r_t, p2t_t, p2s_t = run_part(part2, test_source, run_bench)
-            print_part(nr, 2, p2r_t, p2t_t, p2s_t, hide_res, test_nr=test_nr)
-            total += p2t_t
+            if not only_test:
+                r, t, s = run_part(f, source, run_bench)
+                print_part(nr, part, r, t, s, hide_res)
+                total += t
 
-        if not only_test:
-            p2r, p2t, p2s = run_part(part2, source, run_bench)
-            print_part(nr, 2, p2r, p2t, p2s, hide_res)
-
-        if not only_test:
-            total += p1t + p2t 
     print(f"total: {display_time(total)}")
