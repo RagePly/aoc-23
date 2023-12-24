@@ -4,6 +4,7 @@
 # y1 + (x2 - x1 + b * vx2) vy1 / vx1 = y2 + b * vy2
 # y1 - y2 + (x2-x1) * vy1 / vx1 + b*vx2 * vy1/vx1 = b * vy2
 # b = (y1 - y2 + (x2-x1) * vy1 / vx1) / (vy2 - vx2*vy1/vx1)
+
 def part1(src):
     paths = [list(map(lambda x: list(map(int, x.split(", "))), line.split(" @ "))) for line in src.splitlines()]
     s = 0
@@ -21,13 +22,10 @@ def part1(src):
         if b < 0 or a < 0:
             continue
 
-        ix2 = x2 + b*vx2
-        iy2 = y2 + b*vy2
-
-        ix1 = x1 + a*vx1
-        iy1 = y1 + a*vy1
+        ix = x + a*vx
+        iy = y + a*vy
         
-        if ix1 >= least and ix1 <= most and iy1 >= least and iy1 <= most:
+        if ix >= least and ix <= most and iy >= least and iy <= most:
             s += 1
     return s
 
