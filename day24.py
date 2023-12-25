@@ -22,8 +22,8 @@ def part1(src):
         if b < 0 or a < 0:
             continue
 
-        ix = x + a*vx
-        iy = y + a*vy
+        ix = x1 + a*vx1
+        iy = y1 + a*vy1
         
         if ix >= least and ix <= most and iy >= least and iy <= most:
             s += 1
@@ -32,16 +32,16 @@ def part1(src):
 from sympy import symbols, nonlinsolve
 def part2(src):
     paths = [map(lambda x: map(int, x.split(", ")), line.split(" @ ")) for line in src.splitlines()]
-    system_t = symbols('t_0, t_1, t_2, t_3')
+    system_t = symbols('t_0, t_1, t_2')
     system_x = symbols('x,y,z')
     system_d = symbols('dx,dy,dz')
     system = system_t + system_x + system_d
 
     equations = [
         x - p + t*(d - v)
-        for t, [pos,vel] in zip(system_t, paths[:4])
+        for t, [pos,vel] in zip(system_t, paths[:3])
         for x,d,p,v in zip(system_x, system_d, pos, vel)
     ]
     
-    [(_,_,_,_, x,y,z, _,_,_)] = nonlinsolve(equations,system)
+    [(_,_,_, x,y,z, _,_,_)] = nonlinsolve(equations,system)
     return int(x + y + z)
