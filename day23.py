@@ -1,6 +1,5 @@
 from heapq import heappop, heappush
 def part1(src):
-    return None
     RIGHT,UP,LEFT,DOWN = 0,1,2,3 
     arrows = ">^<v"
     grid = list(map(list, src.splitlines()))
@@ -37,13 +36,10 @@ def part1(src):
             elif arrows.index(t) == nd:
                 heappush(queue, (dist+1, steps, nd, (nx,ny), set(visited)))
 
-    print(dists)
     return max(dists)
 
 from collections import defaultdict
 from bisect import insort
-from graphviz import Graph
-from math import factorial
 def part2(src):
     grid = list(map(list, src.splitlines()))
     h,w = len(grid), len(grid[0])
