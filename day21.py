@@ -25,9 +25,6 @@ def printmap(m,active,xo,yo, xstart, xend, ystart, yend):
                 print(m[(y+yo)%len(m)][(x+xo)%len(m[0])],end="")
         print()
 
-from collections import defaultdict
-from time import sleep
-
 def part2(src):
     m = list(map(list, src.splitlines()))
     s = next((x,y) for y,l in enumerate(m) for x,s in enumerate(l) if s == "S")
